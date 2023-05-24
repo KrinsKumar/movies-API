@@ -1,3 +1,7 @@
 #moviesTable tr:hover{ 
     cursor:pointer; 
 }
+
+button {
+    margin: 5px 5px;
+}
