@@ -9,10 +9,10 @@
 *
 ********************************************************************************/ 
 
-const cors = require('cors');
 const express = require('express');
 const app = express();
 const env = require('dotenv').config();
+const cors = require('cors');
 
 const MoviesDB = require("./modules/moviesDB.js");
 const db = new MoviesDB();
@@ -34,7 +34,8 @@ app.post("/api/movies", (req, res) => {
 
 app.get("/api/movies", (req, res) => {
     let title = null;
-    if (req.query.title) title = res.query.title;
+    if (req.query.title) 
+    title = req.query.title;
 
     db.getAllMovies(req.query.page, req.query.perPage, title)
     .then((movies) => {

@@ -6,6 +6,8 @@ let perPage = 10;
 //when dom is loaded
 document.addEventListener("DOMContentLoaded", () => {
     
+    loadMovieData();
+
     //for previous page button
     document.querySelector("#previous-page")
     .addEventListener("click", () => {
@@ -27,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("submit", (e) => {
         e.preventDefault();
         let title = document.querySelector("#title").value;
+        if (title == "") title = null;
         loadMovieData(title);
     });
 
@@ -46,6 +49,16 @@ let loadMovieData = function (title = null) {
         document.getElementById("table-body").innerHTML = movieRows;
         document.getElementById("current-page").innerHTML = page;
         addRowsEvent(document.querySelectorAll("tr"));
+
+        if (title == null) {
+            document.querySelector('#pagination-container')
+            .classList.remove("d-none");
+        } else {
+            page = 1;
+            document.querySelector('#pagination-container')
+            .classList.add("d-none");
+        } 
+
     })
     .catch((err) => {
         console.log(err);
@@ -55,8 +68,8 @@ let loadMovieData = function (title = null) {
 //function that gets the data from the server
 let getMovieData = function(title) {
     let url = title
-        ? `https://zany-plum-lobster-shoe.cyclic.app/api/movies?page=${page}&perPage=${perPage}&title=${title}`
-        : `https://zany-plum-lobster-shoe.cyclic.app/api/movies?page=${page}&perPage=${perPage}`;
+        ? `http://localhost:8080/api/movies?page=${page}&perPage=${perPage}&title=${title}`
+        : `http://localhost:8080/api/movies?page=${page}&perPage=${perPage}`;
 
     return new Promise((resolve, reject) => {
         fetch(url)
@@ -73,22 +86,22 @@ let getMovieData = function(title) {
 //function that displays the data
 let createMovieHtml = function(data) {
     let allRows = ``;
-    data.map((movie) => {
+    data.message.map((movie) => {
         let plot = movie.plot;
         if (movie.plot == null || movie.plot == undefined || movie.plot == '') plot = "N/A";
 
         let hour = Math.floor(movie.runtime / 60);
-        let minute = (runtime % 60).toString().padStart(2, '0');
+        let minute = (movie.runtime % 60).toString().padStart(2, '0');
         let runtime = `${hour}:${minute}`;
 
         allRows += `
-            <th id="${movie._id}">
+            <tr id="${movie._id}">
                 <td>${movie.year}</td>
                 <td>${movie.title}</td>
                 <td>${plot}</td>
                 <td>${movie.rated}</td>
                 <td>${runtime}</td>
-            </th>
+            </tr>
         `
     })
     return allRows;
@@ -96,10 +109,10 @@ let createMovieHtml = function(data) {
 
 //add event listeners to the movie rows
 let addRowsEvent = function(rows) {
-    rows.map((row) => {
+    Array.from(rows).map((row) => {
         row.addEventListener("click", (e) => {
-            let id = e.target.id;
-            let url = `https://zany-plum-lobster-shoe.cyclic.app/api/movies/${id}`;
+            let id = e.target.parentNode.id;
+            let url = `http://localhost:8080/api/movies/${id}`;
 
             fetch(url)
             .then((res) => res.json())
@@ -119,7 +132,7 @@ let addRowsEvent = function(rows) {
 
                 document.querySelector(".modal-body").innerHTML = body;
                 
-                let myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                let myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
                 myModal.show();
             });
         });   
