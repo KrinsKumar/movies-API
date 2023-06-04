@@ -68,8 +68,8 @@ let loadMovieData = function (title = null) {
 //function that gets the data from the server
 let getMovieData = function(title) {
     let url = title
-        ? `https://jolly-gray-dolphin.cyclic.app/api/movies?page=${page}&perPage=${perPage}&title=${title}`
-        : `https://jolly-gray-dolphin.cyclic.app/api/movies?page=${page}&perPage=${perPage}`;
+        ? `http://localhost:8080/api/movies?page=${page}&perPage=${perPage}&title=${title}`
+        : `http://localhost:8080/api/movies?page=${page}&perPage=${perPage}`;
 
     return new Promise((resolve, reject) => {
         fetch(url)
@@ -112,7 +112,7 @@ let addRowsEvent = function(rows) {
     Array.from(rows).map((row) => {
         row.addEventListener("click", (e) => {
             let id = e.target.parentNode.id;
-            let url = `https://jolly-gray-dolphin.cyclic.app/api/movies/${id}`;
+            let url = `http://localhost:8080/api/movies/${id}`;
 
             fetch(url)
             .then((res) => res.json())
