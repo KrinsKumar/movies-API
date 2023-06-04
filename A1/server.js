@@ -40,7 +40,6 @@ app.get("/api/movies", (req, res) => {
     db.getAllMovies(req.query.page, req.query.perPage, title)
     .then((movies) => {
         res.status(201).json({message: movies});
-        console.log(movies);
     }).catch((err) => {
         res.status(500).json({message: err});
     })
@@ -74,7 +73,7 @@ app.delete("api/movies/:id", (req, res) => {
 });
 
 
-db.initialize(process.env.MONGO_CONNECTION_STRING).then(()=>{
+db.initialize("mongodb+srv://krinskumar2:9chfN34eD17AVLHh@cluster0.kntehfg.mongodb.net/sample_mflix").then(()=>{
     app.listen(HTTP_PORT, ()=>{
         console.log(`server listening on: ${HTTP_PORT}`);
     });
