@@ -73,7 +73,7 @@ app.delete("api/movies/:id", (req, res) => {
 });
 
 
-db.initialize(process.env.MONGO_CONNECTION_STRING).then(()=>{
+db.initialize("mongodb+srv://krinskumar2:9chfN34eD17AVLHh@cluster0.kntehfg.mongodb.net/sample_mflix").then(()=>{
     app.listen(HTTP_PORT, ()=>{
         console.log(`server listening on: ${HTTP_PORT}`);
     });
