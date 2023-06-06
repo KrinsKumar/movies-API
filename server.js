@@ -73,7 +73,7 @@ app.delete("api/movies/:id", (req, res) => {
 });
 
 
-db.initialize("mongodb+srv://krinskumar2:9chfN34eD17AVLHh@cluster0.kntehfg.mongodb.net/sample_mflix").then(()=>{
+db.initialize("mongodb+srv://krinskumar2:OkHkqARe4FKeivO1@atlascluster.9qnqpt2.mongodb.net/sample_mflix").then(()=>{
     app.listen(HTTP_PORT, ()=>{
         console.log(`server listening on: ${HTTP_PORT}`);
     });
