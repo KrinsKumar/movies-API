@@ -72,6 +72,7 @@ app.delete("api/movies/:id", (req, res) => {
     })
 });
 
+console.log("running")
 
 db.initialize("mongodb+srv://krinskumar2:OkHkqARe4FKeivO1@atlascluster.9qnqpt2.mongodb.net/sample_mflix").then(()=>{
     app.listen(HTTP_PORT, ()=>{
