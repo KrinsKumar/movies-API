@@ -48,6 +48,7 @@ module.exports = class MoviesDB {
 
   // Pass the connection string to `initialize()`
   initialize(connectionString) {
+    console.log("initialize")
     return new Promise((resolve, reject) => {
       const db = mongoose.createConnection(
         connectionString,
@@ -61,6 +62,7 @@ module.exports = class MoviesDB {
         reject(err);
       });
       db.once('open', () => {
+        console.log("open")
         this.Movie = db.model("movies", movieSchema);
         resolve();
       });
