@@ -59,7 +59,7 @@ module.exports = class MoviesDB {
       );
 
       db.once('error', (err) => {
-         //console.log("close " + err)
+         //console.log("close " + err)ff
         reject(err);
       });
       db.once('open', () => {
